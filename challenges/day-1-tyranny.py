@@ -4,7 +4,7 @@ https://adventofcode.com/2019/day/1
 """
 from functools import reduce
 from math import floor
-from .utils import file_to_numbers, read_input_file
+from .utils import read_file_lines_as_numbers
 
 
 def sum_fuel(a, b):
@@ -29,8 +29,7 @@ def calculate_fuel(mass):
 
 def main():
     """Solve and print day 1's challenge."""
-    masses = file_to_numbers(
-        read_input_file('day-1-input.txt'))
+    masses = read_file_lines_as_numbers('day-1-input.txt'))
     masses.insert(0, 0)
     fuel = reduce(sum_fuel, masses)
 

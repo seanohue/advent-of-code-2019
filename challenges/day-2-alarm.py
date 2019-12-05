@@ -1,6 +1,6 @@
 """See https://adventofcode.com/2019/day/2"""
 from functools import reduce
-# from .utils import file_to_numbers, read_input_file
+from utils import read_csv_file_as_numbers
 
 
 class IntComputer:
@@ -116,9 +116,20 @@ class IntComputer:
 
 def main():
     """Solve and print day 2's challenge."""
-    computer = IntComputer([1, 0, 0, 0, 99])
+    print('Basic test:')
+    basic_computer = IntComputer([1, 0, 0, 0, 99])
+    basic_computer.execute_program()
+    print(basic_computer.get(0) == 2)
+
+    print('Full test:')
+    program = read_csv_file_as_numbers('day-2-input.txt')
+    computer = IntComputer(program)
+
+    # Set up 1202 alarm state...
+    computer.insert(1, 12)
+    computer.insert(2, 2)
     computer.execute_program()
-    print(computer.get(0) == 2)
+    print(computer.get(0))
 
 
 if __name__ == "__main__":
