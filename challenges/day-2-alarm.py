@@ -11,12 +11,12 @@ class IntComputer:
     def __init__(self, program):
         """Init an IntComputer with a program."""
         self.program = program
-        self.position = 0
+        self.pointer = 0
 
-    def get(self, position=None):
-        """Get the value at a position in the program."""
+    def get(self, address=None):
+        """Get the value at a address in the program."""
         return self.program[
-            position if position is not None else self.position]
+            address if address is not None else self.pointer]
 
     def step(self):
         """Read & execute the opcode at the current position."""
@@ -27,7 +27,7 @@ class IntComputer:
         return self.get(
             self.advance(n))
 
-    def read_list(self, n=1):
+    def read_parameters(self, n=1):
         """
         Get and return the values at the next n positions."""
         return self.get_list(
@@ -35,8 +35,8 @@ class IntComputer:
 
     def advance(self, n=1):
         """Advance the program's position and return it."""
-        self.position += n
-        return self.position
+        self.pointer += n
+        return self.pointer
 
     def insert(self, position, value):
         """Insert a value at that position destructively."""
@@ -77,18 +77,18 @@ class IntComputer:
         """Raise an exception due to invalid opcode."""
         raise Exception(
             'Invalid opcode: <{}>: {}'.format(
-                self.position, self.read()))
+                self.pointer, self.read()))
 
     def add(self, n=2):
         """Add the next n values."""
         return sum(
-            self.read_list(n))
+            self.read_parameters(n))
 
     def multiply(self, n=2):
         """Multiply the next n values."""
         return reduce(
             (lambda x, y: x * y),
-            self.read_list(n))
+            self.read_parameters(n))
 
     def get_list(self, iterable):
         """Given a list of positions, return a list of values."""
@@ -108,7 +108,7 @@ class IntComputer:
         executing = True
         while executing:
             print('<{}>: {}'.format(
-                self.position, self.get()))
+                self.pointer, self.get()))
             executing = self.step()
         print('Done!')
 
