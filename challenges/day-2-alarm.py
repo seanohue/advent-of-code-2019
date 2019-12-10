@@ -121,15 +121,32 @@ def main():
     basic_computer.execute_program()
     print(basic_computer.get(0) == 2)
 
-    print('Full test:')
-    program = read_csv_file_as_numbers('day-2-input.txt')
-    computer = IntComputer(program)
+    noun = -1
+    verb = 0
+    result = None
+    target = 19690720
+    error = None
+    initial_memory = read_csv_file_as_numbers('./day-2-input.txt')
+    while result != target and not error:
+        try:
+            noun += 1
+            # 160 is when the program maxes out
+            if noun == 160:
+                noun = 1
+                verb += 1
+            computer = IntComputer(list(initial_memory))
+            computer.insert(1, noun)
+            computer.insert(2, verb)
+            computer.execute_program()
+            result = computer.get(0)
+        except Exception as e:
+            error = e
+            print(e)
+            print('Failed at noun {} and verb {}'.format(noun, verb))
 
-    # Set up 1202 alarm state...
-    computer.insert(1, 12)
-    computer.insert(2, 2)
-    computer.execute_program()
-    print(computer.get(0))
+    code = (100 * noun) + verb
+    print('program code is {}'.format(code))
+
 
 
 if __name__ == "__main__":
